@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaPuzzlePiece,
   FaGhost,
@@ -23,15 +24,25 @@ import {
   FaTags,
   FaGlobe,
   FaInfoCircle,
+  FaList,
+  FaHeart,
 } from "react-icons/fa";
 import { FaChevronRight, FaChevronDown } from "react-icons/fa6";
 
 const Sidebar = () => {
-  const [activeMenu, setActiveMenu] = useState(null);
+  const [activeMenu, setActiveMenu] = useState("All games");
   const [languageOpen, setLanguageOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("English");
 
+  // 🔹 Top section items
+  const topItems = [
+    { name: "All games", icon: <FaGamepad />, badge: null },
+    { name: "New", icon: null, badge: 234 },
+    { name: "Popular", icon: <FaHeart />, badge: null },
+  ];
+
   const menuItems = [
+    { name: "All categories", icon: <FaList />, link: "/all-categories" }, // ✅ Added link
     { name: "Puzzles", icon: <FaPuzzlePiece /> },
     { name: "Horror", icon: <FaGhost /> },
     { name: "Simulators", icon: <FaGamepad /> },
@@ -84,26 +95,89 @@ const Sidebar = () => {
 
   return (
     <aside className="w-60 bg-[#1e1e1e] text-gray-300 h-screen p-4 overflow-y-auto scrollbar-hide">
-      {/* Categories */}
-      <ul className="space-y-2 border-b border-gray-700 pb-3">
-        {menuItems.map((item, index) => (
-          <li
-            key={index}
-            onClick={() => setActiveMenu(item.name)}
-            className={`flex items-center space-x-3 px-3 py-2 rounded-md cursor-pointer transition 
+      
+      {/* 🔹 Top Section */}
+<ul className="space-y-2 border-b border-gray-700 pb-3">
+  {topItems.map((item, index) =>
+    item.name === "All games" ? (
+      <Link to="/" key={index}>
+        <li
+          onClick={() => setActiveMenu(item.name)}
+          className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition 
+            ${
+              activeMenu === item.name
+                ? "bg-white text-black"
+                : "hover:bg-[#2a2a2a] text-gray-300"
+            }`}
+        >
+          <div className="flex items-center space-x-3">
+            {item.icon && <span className="text-lg">{item.icon}</span>}
+            <span className="text-sm font-medium">{item.name}</span>
+          </div>
+        </li>
+      </Link>
+    ) : (
+      <li
+        key={index}
+        onClick={() => setActiveMenu(item.name)}
+        className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition 
+          ${
+            activeMenu === item.name
+              ? "bg-white text-black"
+              : "hover:bg-[#2a2a2a] text-gray-300"
+          }`}
+      >
+        <div className="flex items-center space-x-3">
+          {item.icon && <span className="text-lg">{item.icon}</span>}
+          <span className="text-sm font-medium">{item.name}</span>
+        </div>
+        {item.badge && (
+          <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
+            {item.badge}
+          </span>
+        )}
+      </li>
+    )
+  )}
+</ul>
+
+      {/* 🔹 Categories Section */}
+      <ul className="space-y-2 border-b border-gray-700 pb-3 mt-3">
+        {menuItems.map((item, index) =>
+          item.link ? (
+            <Link to={item.link} key={index}>
+              <li
+                onClick={() => setActiveMenu(item.name)}
+                className={`flex items-center space-x-3 px-3 py-2 rounded-md cursor-pointer transition 
+                ${
+                  activeMenu === item.name
+                    ? "bg-white text-black"
+                    : "hover:bg-[#2a2a2a] text-gray-300"
+                }`}
+              >
+                <span className="text-lg">{item.icon}</span>
+                <span className="text-sm font-medium">{item.name}</span>
+              </li>
+            </Link>
+          ) : (
+            <li
+              key={index}
+              onClick={() => setActiveMenu(item.name)}
+              className={`flex items-center space-x-3 px-3 py-2 rounded-md cursor-pointer transition 
               ${
                 activeMenu === item.name
                   ? "bg-white text-black"
                   : "hover:bg-[#2a2a2a] text-gray-300"
               }`}
-          >
-            <span className="text-lg">{item.icon}</span>
-            <span className="text-sm font-medium">{item.name}</span>
-          </li>
-        ))}
+            >
+              <span className="text-lg">{item.icon}</span>
+              <span className="text-sm font-medium">{item.name}</span>
+            </li>
+          )
+        )}
       </ul>
 
-      {/* Tags Section */}
+      {/* 🔹 Tags Section */}
       <div className="mt-4 border-b border-gray-700 pb-3">
         <div className="flex items-center space-x-2 px-3 mb-2 text-gray-400">
           <span>
@@ -131,7 +205,8 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Language Section */}
+
+      {/* 🔹 Language Section */}
       <div className="mt-4 border-b border-gray-700 pb-3">
         <div
           className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-[#2a2a2a] rounded"
@@ -166,7 +241,7 @@ const Sidebar = () => {
         )}
       </div>
 
-      {/* More Section */}
+      {/* 🔹 More Section */}
       <div className="mt-4 border-b border-gray-700 pb-3">
         <div className="flex items-center space-x-2 px-3 mb-2 text-gray-400">
           <span>
