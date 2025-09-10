@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { motion } from "framer-motion";
 import {
   FaRocket,
   FaGhost,
@@ -68,30 +69,59 @@ const footerLinks = [
   "Digital Services Act",
 ];
 
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08, // delay between each child
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
 export default function AllCategories() {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#151515] to-[#1e1e1e] text-gray-300 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#161616] text-gray-300 flex flex-col justify-between font-sans">
       {/* Content */}
-      <div className="px-10 py-8">
-        <h1 className="text-white text-xl font-semibold mb-8">All categories</h1>
+      <div className="px-12 py-10">
+        <h1 className="text-white text-lg font-medium mb-10">All categories</h1>
 
-        <div className="grid grid-cols-4 gap-y-4 gap-x-10">
+        <motion.div
+          className="grid grid-cols-4 gap-y-6 gap-x-12"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {categories.map((cat, i) => (
-            <div
+            <motion.div
               key={i}
-              className="flex items-center gap-3 cursor-pointer text-gray-300 hover:text-gray-100 transition"
+              variants={itemVariants}
+              className="flex items-center gap-3 cursor-pointer group transition-all duration-200"
             >
-              <span className="text-lg">{cat.icon}</span>
-              <span className="text-sm">{cat.name}</span>
-            </div>
+              <span className="text-xl text-gray-400 group-hover:text-green-400 transition-transform transform group-hover:scale-110">
+                {cat.icon}
+              </span>
+              <span className="text-sm text-gray-300 group-hover:text-white">
+                {cat.name}
+              </span>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Footer */}
-      <footer className="px-10 py-4 border-t border-gray-700 flex gap-6 text-green-500 text-sm">
+      <footer className="px-12 py-5 border-t border-gray-700 flex gap-8 text-green-500 text-sm">
         {footerLinks.map((link, i) => (
-          <span key={i} className="cursor-pointer hover:underline">
+          <span
+            key={i}
+            className="cursor-pointer hover:underline hover:text-green-400 transition-colors duration-200"
+          >
             {link}
           </span>
         ))}
@@ -99,4 +129,3 @@ export default function AllCategories() {
     </div>
   );
 }
-

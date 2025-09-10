@@ -11,31 +11,41 @@ import {
 export default function LoginSignup() {
   const [activeTab, setActiveTab] = useState("login");
 
+  // Colorful fast-loading PNG images
+  const bgImages = [
+    "https://img.icons8.com/color/48/mario.png",
+    "https://img.icons8.com/color/48/controller.png",
+    "https://img.icons8.com/color/48/ghost.png",
+    "https://img.icons8.com/color/48/pacman.png",
+    "https://img.icons8.com/color/48/sonic.png",
+    "https://img.icons8.com/color/48/joystick.png",
+    "https://img.icons8.com/color/48/nintendo.png",
+    "https://img.icons8.com/color/48/pokemon.png",
+    "https://img.icons8.com/color/48/arcade.png",
+    "https://img.icons8.com/color/48/dragon-quest.png",
+  ];
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center relative overflow-hidden">
       {/* Background floating icons */}
-      <div className="absolute inset-0 flex flex-wrap justify-center items-center gap-8 opacity-30 pointer-events-none">
-        {[
-          "https://img.icons8.com/color/96/mario.png",
-          "https://img.icons8.com/color/96/controller.png",
-          "https://img.icons8.com/color/96/ghost.png",
-          "https://img.icons8.com/color/96/pacman.png",
-          "https://img.icons8.com/color/96/sonic.png",
-          "https://img.icons8.com/color/96/nintendo.png",
-          "https://img.icons8.com/color/96/joystick.png",
-          "https://img.icons8.com/color/96/pokemon.png",
-          "https://img.icons8.com/color/96/arcade.png",
-          "https://img.icons8.com/color/96/dragon-quest.png",
-        ].map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt="game"
-            className={`w-20 h-20 rounded-lg object-cover shadow-lg animate-float${
-              (i % 3) + 1
-            }`}
-          />
-        ))}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 30 }).map((_, i) => {
+          const top = Math.floor(Math.random() * 90) + "%";
+          const left = Math.floor(Math.random() * 90) + "%";
+          const size = Math.floor(Math.random() * 40) + 30; // 30px - 70px
+          const floatClass = `animate-float${(i % 3) + 1}`;
+          const src = bgImages[i % bgImages.length];
+
+          return (
+            <img
+              key={i}
+              src={src}
+              alt="game"
+              className={`${floatClass} absolute rounded-lg opacity-80`}
+              style={{ top, left, width: `${size}px`, height: `${size}px` }}
+            />
+          );
+        })}
       </div>
 
       {/* Center Card */}
@@ -135,16 +145,16 @@ export default function LoginSignup() {
       {/* Tailwind animations */}
       <style>{`
         @keyframes float1 {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(5deg); }
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(5deg); }
         }
         @keyframes float2 {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(15px) rotate(-5deg); }
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(10px) rotate(-5deg); }
         }
         @keyframes float3 {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(10deg); }
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-5px) rotate(10deg); }
         }
         .animate-float1 { animation: float1 6s ease-in-out infinite; }
         .animate-float2 { animation: float2 7s ease-in-out infinite; }
