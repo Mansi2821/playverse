@@ -62,6 +62,14 @@ const gamesTrending = [
   { title: "Fire Emblem Engage", img: "https://picsum.photos/id/225/400/225", video: "https://sample-videos.com/video321/mp4/720/sample-5s.mp4", score: 91 },
 ];
 
+// New category
+const gamesEsports = Array.from({ length: 22 }, (_, i) => ({
+  title: `Esports Game ${i + 1}`,
+  img: `https://picsum.photos/id/${300 + i}/400/225`,
+  video: "https://www.w3schools.com/html/mov_bbb.mp4",
+  score: 80 + (i % 20),
+}));
+
 /* ---------- CARD COMPONENT ---------- */
 const GameCard = ({ title, img, video, score, age, special }) => {
   const [hovered, setHovered] = useState(false);
@@ -114,13 +122,13 @@ const GameCard = ({ title, img, video, score, age, special }) => {
 
 /* ---------- MAIN COMPONENT ---------- */
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(null);
   const menuRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false);
+        setMenuOpen(null);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -128,7 +136,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="h-screen w-full bg-gradient-to-r from-[#181818] via-[#1F1F1F] to-[#222] text-white overflow-y-auto">
+    <main className="h-screen w-full bg-gradient-to-r from-[#181818] via-[#1F1F1F] to-[#222] text-white ">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-6 space-y-10">
 
         {/* Recommended Section */}
@@ -143,9 +151,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Ad Section */}
-        <div className="relative bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg hover:shadow-green-400/30 transition">
-          <div className="flex flex-col sm:flex-row h-48">
+        {/* Ad Section 1 */}
+        <div className="relative bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg hover:shadow-green-400/30 transition h-56">
+          <div className="flex flex-col sm:flex-row h-full">
             {/* Left: Car Image */}
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Daewoo_Gentra_sedan.jpg"
@@ -165,26 +173,26 @@ export default function Home() {
                 Learn more
               </a>
               <button
-                onClick={() => setMenuOpen(!menuOpen)}
+                onClick={() => setMenuOpen(menuOpen === 1 ? null : 1)}
                 className="absolute top-2 right-2 text-gray-400 hover:text-white p-1"
               >
-                <BsThreeDotsVertical size={20} />
+                <BsThreeDotsVertical size={18} />
               </button>
-              {menuOpen && (
+              {menuOpen === 1 && (
                 <div
                   ref={menuRef}
-                  className="absolute top-8 right-2 w-60 bg-[#111] text-white rounded-lg shadow-lg border border-gray-700 z-50"
+                  className="absolute top-10 right-2 w-44 bg-[#111] text-white rounded-lg shadow-lg border border-gray-700 z-50"
                 >
-                  <div className="px-4 py-3 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+                  <div className="px-3 py-2 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
                     Hide ad
                   </div>
-                  <div className="px-4 py-3 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+                  <div className="px-3 py-2 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
                     Report this ad
                   </div>
-                  <div className="px-4 py-3 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+                  <div className="px-3 py-2 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
                     Why am I seeing this ad?
                   </div>
-                  <div className="px-4 py-3 hover:bg-gray-800 cursor-pointer">
+                  <div className="px-3 py-2 hover:bg-gray-800 cursor-pointer">
                     About this advertiser
                   </div>
                 </div>
@@ -204,10 +212,73 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Ad Section 2 */}
+        <div className="relative bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg hover:shadow-green-400/30 transition h-56">
+          <div className="flex flex-col sm:flex-row h-full">
+            {/* Left: Car Image */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/3/3e/2018_Toyota_Camry_SE_front_4.14.18.jpg"
+              alt="Toyota Camry"
+              className="h-full w-full sm:w-1/3 object-cover"
+            />
+            {/* Right: Text + Menu */}
+            <div className="flex-1 flex flex-col justify-center px-4 relative">
+              <h3 className="text-lg font-semibold">Toyota Camry</h3>
+              <p className="text-sm text-gray-400">2.5 SE</p>
+              <a
+                href="https://example.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition w-fit"
+              >
+                Learn more
+              </a>
+              <button
+                onClick={() => setMenuOpen(menuOpen === 2 ? null : 2)}
+                className="absolute top-2 right-2 text-gray-400 hover:text-white p-1"
+              >
+                <BsThreeDotsVertical size={18} />
+              </button>
+              {menuOpen === 2 && (
+                <div
+                  ref={menuRef}
+                  className="absolute top-10 right-2 w-44 bg-[#111] text-white rounded-lg shadow-lg border border-gray-700 z-50"
+                >
+                  <div className="px-3 py-2 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+                    Hide ad
+                  </div>
+                  <div className="px-3 py-2 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+                    Report this ad
+                  </div>
+                  <div className="px-3 py-2 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+                    Why am I seeing this ad?
+                  </div>
+                  <div className="px-3 py-2 hover:bg-gray-800 cursor-pointer">
+                    About this advertiser
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Esports Section */}
+        <section>
+          <h2 className="text-xl font-semibold mb-4">
+            Esports ({gamesEsports.length})
+          </h2>
+          <div className="grid gap-4 md:gap-5 lg:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {gamesEsports.map((g, i) => (
+              <GameCard key={i} {...g} />
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   );
 }
+
 
 
 

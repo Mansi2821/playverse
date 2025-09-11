@@ -96,11 +96,29 @@ const Sidebar = () => {
   return (
     <aside className="w-60 bg-[#1e1e1e] text-gray-300 h-screen p-4 overflow-y-auto scrollbar-hide">
       
-      {/* 🔹 Top Section */}
+
+{/* 🔹 Top Section */}
 <ul className="space-y-2 border-b border-gray-700 pb-3">
   {topItems.map((item, index) =>
     item.name === "All games" ? (
       <Link to="/" key={index}>
+        <li
+          onClick={() => setActiveMenu(item.name)}
+          className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition 
+            ${
+              activeMenu === item.name
+                ? "bg-white text-black"
+                : "hover:bg-[#2a2a2a] text-gray-300"
+            }`}
+        >
+          <div className="flex items-center space-x-3">
+            {item.icon && <span className="text-lg">{item.icon}</span>}
+            <span className="text-sm font-medium">{item.name}</span>
+          </div>
+        </li>
+      </Link>
+    ) : item.name === "Popular" ? (   // ✅ NEW: make Popular clickable
+      <Link to="/popular" key={index}>
         <li
           onClick={() => setActiveMenu(item.name)}
           className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition 
@@ -140,6 +158,7 @@ const Sidebar = () => {
     )
   )}
 </ul>
+
 
       {/* 🔹 Categories Section */}
       <ul className="space-y-2 border-b border-gray-700 pb-3 mt-3">

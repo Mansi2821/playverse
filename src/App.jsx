@@ -1,9 +1,16 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./Sidebar";
 import Home from "./pages/home";
 import LoginSignup from "./pages/LoginSignup";
 import AllCategories from "./pages/AllCategories";
+import Popular from "./pages/Popular"; // ✅ Import Popular page
 
 // ✅ Proper dynamic category page using useParams
 function CategoryPage() {
@@ -23,7 +30,9 @@ function MainLayout({ children }) {
       <Navbar />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <div className="flex-1 ">{children}</div>
+        <div className="flex-1 overflow-y-auto bg-gray-950">
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -47,6 +56,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/all-categories" element={<AllCategories />} />
+        <Route path="/popular" element={<Popular />} /> {/* ✅ New route */}
         <Route path="/category/:name" element={<CategoryPage />} />
       </Routes>
     </MainLayout>
@@ -62,4 +72,3 @@ function App() {
 }
 
 export default App;
-
